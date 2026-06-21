@@ -1,0 +1,107 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+main { max-width: 480px; width: 100%; }
+
+h1 { font-size: 1.6rem; margin-bottom: 0.3rem; color: #fff; }
+
+.subtitle { color: #888; font-size: 0.9rem; margin-bottom: 2rem; }
+
+section {
+  background: #16213e;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+
+h2 { font-size: 1rem; margin-bottom: 1rem; color: #a0c4ff; }
+
+label { display: block; font-size: 0.85rem; color: #aaa; margin-bottom: 0.3rem; }
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #334;
+  background: #0f0f23;
+  color: #fff;
+  font-size: 0.95rem;
+  margin-bottom: 0.8rem;
+}
+
+select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #334;
+  background: #0f0f23;
+  color: #fff;
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+  cursor: pointer;
+}
+
+input:disabled { opacity: 0.5; }
+
+.btn-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+button, .flash-btn {
+  padding: 0.55rem 1.2rem;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.primary             { background: #0f6fec; color: #fff; }
+.primary:hover       { background: #1a7fff; }
+.secondary           { background: #2a2a4a; color: #ccc; }
+.secondary:hover     { background: #3a3a5a; }
+button:disabled      { opacity: 0.4; cursor: default; }
+.flash-btn           { background: #0f6fec; color: #fff; font-weight: 600; }
+.flash-btn:hover     { background: #1a7fff; }
+
+#status {
+  margin-top: 0.8rem;
+  font-size: 0.85rem;
+  min-height: 1.2em;
+  color: #8be9fd;
+}
+#status.error { color: #ff6b6b; }
+
+.help { font-size: 0.8rem; color: #666; margin-top: 0.6rem; line-height: 1.4; }
+
+.unsupported {
+  background: #3a1a1a;
+  border: 1px solid #5a2a2a;
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 0.85rem;
+  color: #ff9999;
+}
+
+.step-num {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: #0f6fec;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-right: 0.4rem;
+  color: #fff;
+  vertical-align: middle;
+}

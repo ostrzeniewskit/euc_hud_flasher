@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EUC World HUD — Flash &amp; Configure</title>
+  <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+  <main>
+    <h1>EUC World HUD</h1>
+    <p class="subtitle">Flash firmware &amp; configure your HUD over USB</p>
+
+    <!-- Step 1: Flash -->
+    <section>
+      <h2><span class="step-num">1</span> Flash Firmware</h2>
+
+      <label for="firmwareVersion">Firmware version</label>
+      <select id="firmwareVersion">
+        <option disabled>Loading versions…</option>
+      </select>
+      <p id="versionNotes" class="help"></p>
+
+      <esp-web-install-button id="flashButton" manifest="">
+        <button class="flash-btn" slot="activate" style="margin-top:1rem;">Install Firmware</button>
+        <span slot="unsupported">
+          <div class="unsupported">
+            Your browser doesn't support Web Serial.<br>
+            Use <b>Chrome</b> or <b>Edge</b> on desktop.
+          </div>
+        </span>
+      </esp-web-install-button>
+    </section>
+
+    <!-- Step 2: Configure -->
+    <section>
+      <h2><span class="step-num">2</span> Configure Device Name</h2>
+      <p class="help" style="margin-top:0; margin-bottom:0.8rem;">
+        Set the BLE name prefix to match your EUC World app.
+        Default is <b>EUC World</b> (matches any device).
+        To target a specific phone, use the full name shown in the app,
+        e.g. <b>EUC World 123456</b>.
+      </p>
+
+      <div class="btn-row" style="margin-bottom: 1rem;">
+        <button id="connectBtn" class="primary">Connect</button>
+        <button id="disconnectBtn" class="secondary" disabled>Disconnect</button>
+      </div>
+
+      <label for="deviceName">BLE device name prefix</label>
+      <input type="text" id="deviceName" value="EUC World" placeholder="EUC World" disabled>
+
+      <div class="btn-row">
+        <button id="readBtn" class="secondary" disabled>Read Current</button>
+        <button id="setBtn" class="primary" disabled>Save to Device</button>
+      </div>
+
+      <div id="status"></div>
+    </section>
+
+    <p class="help" style="text-align:center;">
+      Requires Chrome or Edge. Connect the ESP32 via USB before starting.
+    </p>
+  </main>
+
+  <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+  <script type="module" src="src/js/app.js"></script>
+</body>
+</html>
