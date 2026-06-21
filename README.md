@@ -1,5 +1,8 @@
 # EUC World HUD Flasher
 
+Flasher available  under
+https://ostrzeniewskit.github.io/euc_hud_flasher/
+
 Web-based firmware flasher and configurator for the **EUC World HUD** — an ESP32-C3 optics HUD device.
 
 This tool is the companion flasher for the [EUC-HUD-Optics-Configurator](https://github.com/ostrzeniewskit/EUC-HUD-Optics-Configurator) project.
