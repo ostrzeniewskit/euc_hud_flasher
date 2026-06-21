@@ -17,6 +17,16 @@ export class DeviceConfigurator {
     return resp ? resp.substring(3) : null;
   }
 
+  async readMode() {
+    const resp = await this.#sendCommand('MODE?', 'MODE=');
+    return resp ? resp.substring(5) : null;
+  }
+
+  async setMode(mode) {
+    const resp = await this.#sendCommand(`MODE=${mode}`, 'OK:MODE=');
+    return resp ? resp.substring(3) : null;
+  }
+
   async #sendCommand(cmd, expectPrefix, timeoutMs = CMD_TIMEOUT_MS) {
     await this.#connection.writeLine(cmd);
     const deadline = Date.now() + timeoutMs;

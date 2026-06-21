@@ -22,7 +22,7 @@
       <p id="versionNotes" class="help"></p>
 
       <esp-web-install-button id="flashButton" manifest="">
-        <button class="flash-btn" slot="activate" style="margin-top:1rem;">Install Firmware</button>
+        <button class="flash-btn" slot="activate" style="margin-top:0.8rem;">Install Firmware</button>
         <span slot="unsupported">
           <div class="unsupported">
             Your browser doesn't support Web Serial.<br>
@@ -34,7 +34,7 @@
 
     <!-- Step 2: Configure -->
     <section>
-      <h2><span class="step-num">2</span> Configure Device Name</h2>
+      <h2><span class="step-num">2</span> Configure Device</h2>
       <p class="help" style="margin-top:0; margin-bottom:0.8rem;">
         Set the BLE name prefix to match your EUC World app.
         Default is <b>EUC World</b> (matches any device).
@@ -53,6 +53,23 @@
       <div class="btn-row">
         <button id="readBtn" class="secondary" disabled>Read Current</button>
         <button id="setBtn" class="primary" disabled>Save to Device</button>
+      </div>
+
+      <hr style="border:none; border-top:1px solid #334; margin:1rem 0;">
+
+      <label>Display mode</label>
+      <div class="btn-row" style="margin-bottom: 0.8rem;">
+        <label class="radio-label">
+          <input type="radio" name="dispMode" value="SPEED" checked disabled> Speed (km/h)
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="dispMode" value="PWM" disabled> PWM (%)
+        </label>
+      </div>
+
+      <div class="btn-row">
+        <button id="readModeBtn" class="secondary" disabled>Read Current</button>
+        <button id="setModeBtn" class="primary" disabled>Save to Device</button>
       </div>
 
       <div id="status"></div>

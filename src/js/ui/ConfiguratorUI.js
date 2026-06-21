@@ -8,6 +8,9 @@ export class ConfiguratorUI {
   #readBtn;
   #setBtn;
   #nameInput;
+  #readModeBtn;
+  #setModeBtn;
+  #modeRadios;
 
   constructor(connection, configurator, status) {
     this.#connection    = connection;
@@ -19,6 +22,9 @@ export class ConfiguratorUI {
     this.#readBtn       = document.getElementById('readBtn');
     this.#setBtn        = document.getElementById('setBtn');
     this.#nameInput     = document.getElementById('deviceName');
+    this.#readModeBtn   = document.getElementById('readModeBtn');
+    this.#setModeBtn    = document.getElementById('setModeBtn');
+    this.#modeRadios    = document.querySelectorAll('input[name="dispMode"]');
 
     this.#setupListeners();
   }
@@ -28,6 +34,8 @@ export class ConfiguratorUI {
     this.#disconnectBtn.addEventListener('click', () => this.#onDisconnect());
     this.#readBtn.addEventListener('click',       () => this.#onRead());
     this.#setBtn.addEventListener('click',        () => this.#onSet());
+    this.#readModeBtn.addEventListener('click',   () => this.#onReadMode());
+    this.#setModeBtn.addEventListener('click',    () => this.#onSetMode());
   }
 
   #setConnected(on) {
@@ -36,6 +44,9 @@ export class ConfiguratorUI {
     this.#readBtn.disabled       = !on;
     this.#setBtn.disabled        = !on;
     this.#nameInput.disabled     = !on;
+    this.#readModeBtn.disabled   = !on;
+    this.#setModeBtn.disabled    = !on;
+    this.#modeRadios.forEach(r => r.disabled = !on);
   }
 
   async #onConnect() {
@@ -79,6 +90,36 @@ export class ConfiguratorUI {
         this.#status.show('Saved: ' + saved);
       } else {
         this.#status.show('No response from device. Make sure firmware is running.', true);
+      }
+    } catch (e) {
+      this.#status.show('Save failed: ' + e.message, true);
+    }
+  }
+
+  async #onReadMode() {
+    this.#status.show('Reading mode...');
+    try {
+      const mode = await this.#configurator.readMode();
+      if (mode !== null) {
+        this.#modeRadios.forEach(r => r.checked = (r.value === mode));
+        this.#status.show('Current mode: ' + mode);
+      } else {
+        this.#status.show('No response from device.', true);
+      }
+    } catch (e) {
+      this.#status.show('Read failed: ' + e.message, true);
+    }
+  }
+
+  async #onSetMode() {
+    const mode = document.querySelector('input[name="dispMode"]:checked').value;
+    this.#status.show('Saving mode...');
+    try {
+      const saved = await this.#configurator.setMode(mode);
+      if (saved !== null) {
+        this.#status.show('Saved: ' + saved);
+      } else {
+        this.#status.show('No response from device.', true);
       }
     } catch (e) {
       this.#status.show('Save failed: ' + e.message, true);

@@ -50,6 +50,28 @@ select {
   cursor: pointer;
 }
 
+select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #334;
+  background: #0f0f23;
+  color: #fff;
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+  cursor: pointer;
+}
+
+.radio-label {
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.radio-label input:disabled { cursor: default; }
+
 input:disabled { opacity: 0.5; }
 
 .btn-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
