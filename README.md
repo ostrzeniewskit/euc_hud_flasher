@@ -7,10 +7,39 @@ Web-based firmware flasher and configurator for the **EUC World HUD** — an ESP
 
 This tool is the companion flasher for the [EUC-HUD-Optics-Configurator](https://github.com/ostrzeniewskit/EUC-HUD-Optics-Configurator) project.
 
+## What the HUD displays
+
+The HUD projects a heads-up display visible through the optics while riding.
+
+**While riding** (wheel is moving), the display shows the active mode:
+
+| Mode | What is shown |
+|------|--------------|
+| **Speed** | Current speed in km/h |
+| **Safety Margin** | Safety margin as a percentage (0–100 %) — sourced from the EUC World app |
+
+**While idle** (wheel is stationary or below the minimum speed threshold), the display automatically switches to a summary view showing:
+- Battery level (%)
+- Current trip distance — shown in km, or in m if under 1 km
+
+This lets you glance at range and battery at a standstill without changing any setting.
+
+On startup the HUD shows a scanning animation while it connects to the EUC World app over BLE. Once connected it switches to the selected live data view.
+
+## What is configurable
+
+All settings are written to the device over USB using the flasher and persist across power cycles:
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| **BLE device name prefix** | The Bluetooth name the HUD scans for. Must match the name shown in EUC World on your phone. Use `EUC World` to pair with any instance, or `EUC World 123456` to target a specific device. | `EUC World` |
+| **Display mode** | What value is shown while riding — Speed (km/h) or Safety Margin (%) from EUC World. | Speed |
+
 ## What it does
 
 - Flashes firmware to the ESP32-C3 HUD device directly from the browser via USB (Web Serial API)
 - Lets you read and set the BLE device name prefix so the HUD pairs with the correct EUC World app instance
+- Lets you switch the display mode between Speed and Safety Margin
 
 ## Requirements
 
@@ -19,11 +48,12 @@ This tool is the companion flasher for the [EUC-HUD-Optics-Configurator](https:/
 
 ## Usage
 
-1. Open `index.html` (or the hosted GitHub Pages URL) in Chrome/Edge
-2. **Step 1 — Flash Firmware**: Click "Install Firmware" and follow the on-screen prompts to flash the ESP32-C3
-3. **Step 2 — Configure Device Name**: Click "Connect", then read or set the BLE name prefix
-   - Default `EUC World` matches any EUC World app instance
-   - Use a full name like `EUC World 123456` to target a specific phone
+1. Open the [flasher](https://ostrzeniewskit.github.io/euc_hud_flasher/) in Chrome or Edge and connect the HUD via USB
+2. **Flash Firmware** — select the firmware version from the dropdown and click "Install Firmware"
+3. **Configure BLE name** — click "Connect", then read or set the device name prefix
+   - `EUC World` pairs with any EUC World instance on any phone
+   - `EUC World 123456` targets a specific phone (use the name shown in the EUC World app)
+4. **Set display mode** — choose Speed (km/h) or Safety Margin (%) and click "Save to Device"
 
 ## Firmware files
 
