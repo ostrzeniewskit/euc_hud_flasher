@@ -22,10 +22,11 @@ export class FirmwareSelector {
         opt.dataset.notes = v.notes || '';
         this.#selectEl.appendChild(opt);
       }
+      this.#selectEl.disabled = false;
       this.#applySelection();
       this.#selectEl.addEventListener('change', () => this.#applySelection());
     } catch (e) {
-      this.#selectEl.innerHTML = '<option disabled>Could not load versions</option>';
+      this.#selectEl.innerHTML = '<option>Could not load versions</option>';
       console.error(e);
     }
   }

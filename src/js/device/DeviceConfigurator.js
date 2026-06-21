@@ -17,6 +17,16 @@ export class DeviceConfigurator {
     return resp ? resp.substring(3) : null;
   }
 
+  async readMapping() {
+    const resp = await this.#sendCommand('MAPPING?', 'MAPPING=');
+    return resp ? resp.substring(8) : null;
+  }
+
+  async setMapping(value) {
+    const resp = await this.#sendCommand(`MAPPING=${value}`, 'OK:MAPPING=');
+    return resp ? resp.substring(3) : null;
+  }
+
   async readMode() {
     const resp = await this.#sendCommand('MODE?', 'MODE=');
     return resp ? resp.substring(5) : null;
