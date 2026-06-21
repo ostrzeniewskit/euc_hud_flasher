@@ -47,3 +47,33 @@ To release a new firmware version:
 ## License
 
 [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) — free to use and adapt with attribution, non-commercial only. See [LICENSE](LICENSE).
+
+---
+
+## Gallery
+
+### Hardware
+
+| | |
+|---|---|
+| ![HUD housing — mirror side](img/507d341f-beb5-46a9-a73d-81c773cd20b4.jpg) | ![HUD housing — lens side](img/7c0b4528-50fd-4998-94e8-adb172790d93.jpg) |
+| 3D-printed housing — mirror & display side | 3D-printed housing — lens side with USB-C port |
+
+### HUD in action
+
+![HUD scanning for EUC World next to the wheel](img/32b485f3-ea30-4a95-97a9-7dfa349596f3.jpg)
+
+| | |
+|---|---|
+| ![Rider POV — battery 100%, 6 min](img/93260336-16ad-423c-8f13-27e73b8a6c8f.jpg) | ![Rider POV — speed display](img/5e49a884-e688-4314-a0a5-63532e7283eb.jpg) |
+| Rider POV — battery & range | Rider POV — speed |
+
+### Demo
+
+![HUD boot with flasher UI in background](img/ezgif-657bafa9177df4a4.gif)
+
+*HUD scanning for BLE — device name set via the flasher*
+
+![HUD scanning with custom device name](img/ezgif-6e00b60d87dd4760.gif)
+
+*Custom device name ("Nosfet aero") configured through the flasher*
