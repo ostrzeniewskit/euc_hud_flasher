@@ -1,6 +1,22 @@
 [
   {
     "version": "1.0.0",
-    "date": "2026-06-21"
+    "date": "2026-06-21",
+    "notes": "Initial release with speed display, radar scanning animation, auto-dim, deep sleep"
+  },
+  {
+    "version": "1.1.0",
+    "date": "2026-06-21",
+    "notes": "Auto-detect EUC World / Nosfet protocol, PWM display mode, configurable BLE name via web serial"
+  },
+  {
+    "version": "1.2.0",
+    "date": "2026-06-21",
+    "notes": "Configurable protocol mapping (Auto / EUC World / Nosfet), trip distance tracking for Nosfet"
+  },
+  {
+    "version": "1.2.1",
+    "date": "2026-06-21",
+    "notes": "Fix Nosfet speed scale (0.1 km/h per unit), fix trip distance always showing 0"
   }
 ]

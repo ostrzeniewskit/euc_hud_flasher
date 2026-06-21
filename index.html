@@ -4,7 +4,69 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EUC World HUD — Flash &amp; Configure</title>
-  <link rel="stylesheet" href="src/css/style.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #1a1a2e; color: #e0e0e0;
+      display: flex; justify-content: center;
+      min-height: 100vh; padding: 2rem 1rem;
+    }
+    main { max-width: 480px; width: 100%; }
+    h1 { font-size: 1.6rem; margin-bottom: 0.3rem; color: #fff; }
+    .subtitle { color: #888; font-size: 0.9rem; margin-bottom: 2rem; }
+    section {
+      background: #16213e; border-radius: 12px;
+      padding: 1.5rem; margin-bottom: 1.2rem;
+    }
+    h2 { font-size: 1rem; margin-bottom: 1rem; color: #a0c4ff; }
+    label { display: block; font-size: 0.85rem; color: #aaa; margin-bottom: 0.3rem; }
+    input[type="text"] {
+      width: 100%; padding: 0.6rem 0.8rem; border-radius: 6px;
+      border: 1px solid #334; background: #0f0f23; color: #fff;
+      font-size: 0.95rem; margin-bottom: 0.8rem;
+    }
+    input:disabled { opacity: 0.5; }
+    .btn-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    button, .flash-btn {
+      padding: 0.55rem 1.2rem; border-radius: 6px; border: none;
+      font-size: 0.9rem; cursor: pointer; font-weight: 500;
+      transition: background 0.15s;
+    }
+    .primary   { background: #0f6fec; color: #fff; }
+    .primary:hover { background: #1a7fff; }
+    .secondary { background: #2a2a4a; color: #ccc; }
+    .secondary:hover { background: #3a3a5a; }
+    button:disabled { opacity: 0.4; cursor: default; }
+    .flash-btn { background: #0f6fec; color: #fff; font-weight: 600; }
+    .flash-btn:hover { background: #1a7fff; }
+    #status {
+      margin-top: 0.8rem; font-size: 0.85rem; min-height: 1.2em;
+      color: #8be9fd;
+    }
+    #status.error { color: #ff6b6b; }
+    .help { font-size: 0.8rem; color: #666; margin-top: 0.6rem; line-height: 1.4; }
+    select {
+      width: 100%; padding: 0.6rem 0.8rem; border-radius: 6px;
+      border: 1px solid #334; background: #0f0f23; color: #fff;
+      font-size: 0.95rem; margin-bottom: 0.4rem; cursor: pointer;
+    }
+    .radio-label {
+      font-size: 0.9rem; cursor: pointer; display: flex;
+      align-items: center; gap: 0.3rem;
+    }
+    .radio-label input:disabled { cursor: default; }
+    .unsupported {
+      background: #3a1a1a; border: 1px solid #5a2a2a; border-radius: 8px;
+      padding: 1rem; font-size: 0.85rem; color: #ff9999;
+    }
+    .step-num {
+      display: inline-block; width: 1.5rem; height: 1.5rem;
+      background: #0f6fec; border-radius: 50%; text-align: center;
+      line-height: 1.5rem; font-size: 0.75rem; font-weight: 700;
+      margin-right: 0.4rem; color: #fff; vertical-align: middle;
+    }
+  </style>
 </head>
 <body>
   <main>
@@ -14,14 +76,13 @@
     <!-- Step 1: Flash -->
     <section>
       <h2><span class="step-num">1</span> Flash Firmware</h2>
-
       <label for="firmwareVersion">Firmware version</label>
-      <select id="firmwareVersion">
-        <option disabled>Loading versions…</option>
+      <select id="firmwareVersion" disabled>
+        <option>Loading versions…</option>
       </select>
       <p id="versionNotes" class="help"></p>
 
-      <esp-web-install-button id="flashButton" manifest="">
+      <esp-web-install-button id="flashButton">
         <button class="flash-btn" slot="activate" style="margin-top:0.8rem;">Install Firmware</button>
         <span slot="unsupported">
           <div class="unsupported">
@@ -34,7 +95,7 @@
 
     <!-- Step 2: Configure -->
     <section>
-      <h2><span class="step-num">2</span> Configure Device</h2>
+      <h2><span class="step-num">2</span> Configure Device Name</h2>
       <p class="help" style="margin-top:0; margin-bottom:0.8rem;">
         Set the BLE name prefix to match your EUC World app.
         Default is <b>EUC World</b> (matches any device).
@@ -53,6 +114,24 @@
       <div class="btn-row">
         <button id="readBtn" class="secondary" disabled>Read Current</button>
         <button id="setBtn" class="primary" disabled>Save to Device</button>
+      </div>
+
+      <hr style="border:none; border-top:1px solid #334; margin:1rem 0;">
+
+      <label for="mappingSelect">Protocol mapping</label>
+      <select id="mappingSelect" disabled>
+        <option value="AUTO">Auto-detect</option>
+        <option value="EUCWORLD">EUC World</option>
+        <option value="NOSFET">Nosfet / Veteran</option>
+      </select>
+      <p class="help" style="margin-top:0.2rem; margin-bottom:0.8rem;">
+        Auto-detect identifies the protocol from incoming data.
+        Select manually if auto-detect doesn't work for your wheel.
+      </p>
+
+      <div class="btn-row" style="margin-bottom: 1rem;">
+        <button id="readMappingBtn" class="secondary" disabled>Read Current</button>
+        <button id="setMappingBtn" class="primary" disabled>Save to Device</button>
       </div>
 
       <hr style="border:none; border-top:1px solid #334; margin:1rem 0;">
@@ -81,6 +160,241 @@
   </main>
 
   <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
-  <script type="module" src="src/js/app.js"></script>
+  <script>
+    // ---- Firmware version selector ----
+
+    const firmwareVersionEl = document.getElementById('firmwareVersion');
+    const versionNotesEl    = document.getElementById('versionNotes');
+    const flashButtonEl     = document.getElementById('flashButton');
+
+    async function loadVersions() {
+      try {
+        const resp = await fetch('firmware/versions.json');
+        if (!resp.ok) throw new Error('Failed to fetch versions.json');
+        const versions = await resp.json();
+        firmwareVersionEl.innerHTML = '';
+        for (const v of versions) {
+          const opt = document.createElement('option');
+          opt.value = v.version;
+          opt.textContent = `v${v.version}  (${v.date})`;
+          opt.dataset.notes = v.notes || '';
+          firmwareVersionEl.appendChild(opt);
+        }
+        firmwareVersionEl.disabled = false;
+        applyVersion();
+        firmwareVersionEl.addEventListener('change', applyVersion);
+      } catch (e) {
+        firmwareVersionEl.innerHTML = '<option>Could not load versions</option>';
+        console.error(e);
+      }
+    }
+
+    function applyVersion() {
+      const opt = firmwareVersionEl.selectedOptions[0];
+      if (!opt) return;
+      flashButtonEl.setAttribute('manifest', `firmware/${opt.value}/manifest.json`);
+      versionNotesEl.textContent = opt.dataset.notes || '';
+    }
+
+    loadVersions();
+
+    // ---- Serial ----
+
+    const connectBtn    = document.getElementById('connectBtn');
+    const disconnectBtn = document.getElementById('disconnectBtn');
+    const readBtn       = document.getElementById('readBtn');
+    const setBtn        = document.getElementById('setBtn');
+    const nameInput     = document.getElementById('deviceName');
+    const mappingSelect  = document.getElementById('mappingSelect');
+    const readMappingBtn = document.getElementById('readMappingBtn');
+    const setMappingBtn  = document.getElementById('setMappingBtn');
+    const readModeBtn    = document.getElementById('readModeBtn');
+    const setModeBtn     = document.getElementById('setModeBtn');
+    const modeRadios     = document.querySelectorAll('input[name="dispMode"]');
+    const statusEl       = document.getElementById('status');
+
+    let port = null;
+    let reader = null;
+    let writer = null;
+    let readableStreamClosed = null;
+
+    function setStatus(msg, isError = false) {
+      statusEl.textContent = msg;
+      statusEl.className = isError ? 'error' : '';
+    }
+
+    function setConnected(on) {
+      connectBtn.disabled    = on;
+      disconnectBtn.disabled = !on;
+      readBtn.disabled       = !on;
+      setBtn.disabled        = !on;
+      nameInput.disabled     = !on;
+      mappingSelect.disabled  = !on;
+      readMappingBtn.disabled = !on;
+      setMappingBtn.disabled  = !on;
+      readModeBtn.disabled    = !on;
+      setModeBtn.disabled     = !on;
+      modeRadios.forEach(r => r.disabled = !on);
+    }
+
+    // ---- Serial helpers ----
+
+    async function readLine(timeoutMs = 2000) {
+      const decoder = new TextDecoder();
+      let buf = '';
+      const deadline = Date.now() + timeoutMs;
+
+      while (Date.now() < deadline) {
+        const remaining = deadline - Date.now();
+        if (remaining <= 0) break;
+
+        try {
+          const result = await Promise.race([
+            reader.read(),
+            new Promise(r => setTimeout(() => r({ timeout: true }), remaining))
+          ]);
+          if (result.timeout || result.done) break;
+          buf += decoder.decode(result.value);
+
+          const nl = buf.indexOf('\n');
+          if (nl !== -1) return buf.substring(0, nl).trim();
+        } catch { break; }
+      }
+      return buf.trim();
+    }
+
+    async function sendCommand(cmd, expectPrefix, timeoutMs = 2000) {
+      const encoder = new TextEncoder();
+      await writer.write(encoder.encode(cmd + '\n'));
+
+      const deadline = Date.now() + timeoutMs;
+      while (Date.now() < deadline) {
+        const line = await readLine(deadline - Date.now());
+        if (!line) continue;
+        if (line.startsWith(expectPrefix)) return line;
+      }
+      return null;
+    }
+
+    // ---- Button handlers ----
+
+    connectBtn.addEventListener('click', async () => {
+      try {
+        port = await navigator.serial.requestPort();
+        await port.open({ baudRate: 115200 });
+        writer = port.writable.getWriter();
+        reader = port.readable.getReader();
+        setConnected(true);
+        setStatus('Connected. You can now read or set the device name.');
+      } catch (e) {
+        setStatus('Connection failed: ' + e.message, true);
+      }
+    });
+
+    disconnectBtn.addEventListener('click', async () => {
+      try {
+        if (reader) { await reader.cancel(); reader.releaseLock(); reader = null; }
+        if (writer) { writer.releaseLock(); writer = null; }
+        if (port)   { await port.close(); port = null; }
+      } catch {}
+      setConnected(false);
+      setStatus('Disconnected.');
+    });
+
+    readBtn.addEventListener('click', async () => {
+      setStatus('Reading...');
+      try {
+        const resp = await sendCommand('NAME?', 'NAME=');
+        if (resp) {
+          const name = resp.substring(5);
+          nameInput.value = name;
+          setStatus('Current name: ' + name);
+        } else {
+          setStatus('No response from device. Make sure firmware is running.', true);
+        }
+      } catch (e) {
+        setStatus('Read failed: ' + e.message, true);
+      }
+    });
+
+    setBtn.addEventListener('click', async () => {
+      const name = nameInput.value.trim();
+      if (!name) { setStatus('Name cannot be empty.', true); return; }
+
+      setStatus('Saving...');
+      try {
+        const resp = await sendCommand('NAME=' + name, 'OK:NAME=');
+        if (resp) {
+          setStatus('Saved: ' + resp.substring(3));
+        } else {
+          setStatus('No response from device. Make sure firmware is running.', true);
+        }
+      } catch (e) {
+        setStatus('Save failed: ' + e.message, true);
+      }
+    });
+
+    readMappingBtn.addEventListener('click', async () => {
+      setStatus('Reading mapping...');
+      try {
+        const resp = await sendCommand('MAPPING?', 'MAPPING=');
+        if (resp) {
+          const val = resp.substring(8);
+          mappingSelect.value = val;
+          setStatus('Current mapping: ' + val);
+        } else {
+          setStatus('No response from device.', true);
+        }
+      } catch (e) {
+        setStatus('Read failed: ' + e.message, true);
+      }
+    });
+
+    setMappingBtn.addEventListener('click', async () => {
+      const val = mappingSelect.value;
+      setStatus('Saving mapping...');
+      try {
+        const resp = await sendCommand('MAPPING=' + val, 'OK:MAPPING=');
+        if (resp) {
+          setStatus('Saved: ' + resp.substring(3));
+        } else {
+          setStatus('No response from device.', true);
+        }
+      } catch (e) {
+        setStatus('Save failed: ' + e.message, true);
+      }
+    });
+
+    readModeBtn.addEventListener('click', async () => {
+      setStatus('Reading mode...');
+      try {
+        const resp = await sendCommand('MODE?', 'MODE=');
+        if (resp) {
+          const mode = resp.substring(5);
+          modeRadios.forEach(r => r.checked = (r.value === mode));
+          setStatus('Current mode: ' + mode);
+        } else {
+          setStatus('No response from device.', true);
+        }
+      } catch (e) {
+        setStatus('Read failed: ' + e.message, true);
+      }
+    });
+
+    setModeBtn.addEventListener('click', async () => {
+      const mode = document.querySelector('input[name="dispMode"]:checked').value;
+      setStatus('Saving mode...');
+      try {
+        const resp = await sendCommand('MODE=' + mode, 'OK:MODE=');
+        if (resp) {
+          setStatus('Saved: ' + resp.substring(3));
+        } else {
+          setStatus('No response from device.', true);
+        }
+      } catch (e) {
+        setStatus('Save failed: ' + e.message, true);
+      }
+    });
+  </script>
 </body>
 </html>
