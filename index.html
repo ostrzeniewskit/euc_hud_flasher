@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EUC World HUD — Flash &amp; Configure</title>
+  <title>EUC HUD — Flash &amp; Configure</title>
   <link rel="stylesheet" href="src/css/style.css">
 </head>
 <body>
   <main>
-    <h1>EUC World HUD</h1>
+    <h1>EUC HUD</h1>
     <p class="subtitle">Flash firmware &amp; configure your HUD over USB</p>
 
     <!-- Step 1: Flash -->
@@ -87,6 +87,23 @@
       <div class="btn-row">
         <button id="readModeBtn" class="secondary" disabled>Read Current</button>
         <button id="setModeBtn" class="primary" disabled>Save to Device</button>
+      </div>
+
+      <hr style="border:none; border-top:1px solid #334; margin:1rem 0;">
+
+      <label>Screen orientation</label>
+      <div class="btn-row" style="margin-bottom: 0.8rem;">
+        <label class="radio-label">
+          <input type="radio" name="flipMode" value="OFF" checked disabled> Normal
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="flipMode" value="ON" disabled> Flipped 180°
+        </label>
+      </div>
+
+      <div class="btn-row">
+        <button id="readFlipBtn" class="secondary" disabled>Read Current</button>
+        <button id="setFlipBtn" class="primary" disabled>Save to Device</button>
       </div>
 
       <div id="status"></div>

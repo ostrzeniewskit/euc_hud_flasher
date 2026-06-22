@@ -37,6 +37,16 @@ export class DeviceConfigurator {
     return resp ? resp.substring(3) : null;
   }
 
+  async readFlip() {
+    const resp = await this.#sendCommand('FLIP?', 'FLIP=');
+    return resp ? resp.substring(5) : null;
+  }
+
+  async setFlip(value) {
+    const resp = await this.#sendCommand(`FLIP=${value}`, 'OK:FLIP=');
+    return resp ? resp.substring(3) : null;
+  }
+
   async #sendCommand(cmd, expectPrefix, timeoutMs = CMD_TIMEOUT_MS) {
     await this.#connection.writeLine(cmd);
     const deadline = Date.now() + timeoutMs;
