@@ -14,6 +14,9 @@ export class ConfiguratorUI {
   #readModeBtn;
   #setModeBtn;
   #modeRadios;
+  #readFlipBtn;
+  #setFlipBtn;
+  #flipRadios;
 
   constructor(connection, configurator, status) {
     this.#connection    = connection;
@@ -31,6 +34,9 @@ export class ConfiguratorUI {
     this.#readModeBtn    = document.getElementById('readModeBtn');
     this.#setModeBtn     = document.getElementById('setModeBtn');
     this.#modeRadios     = document.querySelectorAll('input[name="dispMode"]');
+    this.#readFlipBtn    = document.getElementById('readFlipBtn');
+    this.#setFlipBtn     = document.getElementById('setFlipBtn');
+    this.#flipRadios     = document.querySelectorAll('input[name="flipMode"]');
 
     this.#setupListeners();
   }
@@ -44,6 +50,8 @@ export class ConfiguratorUI {
     this.#setMappingBtn.addEventListener('click',  () => this.#onSetMapping());
     this.#readModeBtn.addEventListener('click',    () => this.#onReadMode());
     this.#setModeBtn.addEventListener('click',     () => this.#onSetMode());
+    this.#readFlipBtn.addEventListener('click',    () => this.#onReadFlip());
+    this.#setFlipBtn.addEventListener('click',     () => this.#onSetFlip());
   }
 
   #setConnected(on) {
@@ -58,6 +66,9 @@ export class ConfiguratorUI {
     this.#readModeBtn.disabled    = !on;
     this.#setModeBtn.disabled     = !on;
     this.#modeRadios.forEach(r => r.disabled = !on);
+    this.#readFlipBtn.disabled    = !on;
+    this.#setFlipBtn.disabled     = !on;
+    this.#flipRadios.forEach(r => r.disabled = !on);
   }
 
   async #onConnect() {
@@ -157,6 +168,36 @@ export class ConfiguratorUI {
     this.#status.show('Saving mode...');
     try {
       const saved = await this.#configurator.setMode(mode);
+      if (saved !== null) {
+        this.#status.show('Saved: ' + saved);
+      } else {
+        this.#status.show('No response from device.', true);
+      }
+    } catch (e) {
+      this.#status.show('Save failed: ' + e.message, true);
+    }
+  }
+
+  async #onReadFlip() {
+    this.#status.show('Reading flip...');
+    try {
+      const val = await this.#configurator.readFlip();
+      if (val !== null) {
+        this.#flipRadios.forEach(r => r.checked = (r.value === val));
+        this.#status.show('Screen orientation: ' + (val === 'ON' ? 'Flipped 180°' : 'Normal'));
+      } else {
+        this.#status.show('No response from device.', true);
+      }
+    } catch (e) {
+      this.#status.show('Read failed: ' + e.message, true);
+    }
+  }
+
+  async #onSetFlip() {
+    const val = document.querySelector('input[name="flipMode"]:checked').value;
+    this.#status.show('Saving orientation...');
+    try {
+      const saved = await this.#configurator.setFlip(val);
       if (saved !== null) {
         this.#status.show('Saved: ' + saved);
       } else {

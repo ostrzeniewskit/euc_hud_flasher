@@ -89,6 +89,23 @@
         <button id="setModeBtn" class="primary" disabled>Save to Device</button>
       </div>
 
+      <hr style="border:none; border-top:1px solid #334; margin:1rem 0;">
+
+      <label>Screen orientation</label>
+      <div class="btn-row" style="margin-bottom: 0.8rem;">
+        <label class="radio-label">
+          <input type="radio" name="flipMode" value="OFF" checked disabled> Normal
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="flipMode" value="ON" disabled> Flipped 180°
+        </label>
+      </div>
+
+      <div class="btn-row">
+        <button id="readFlipBtn" class="secondary" disabled>Read Current</button>
+        <button id="setFlipBtn" class="primary" disabled>Save to Device</button>
+      </div>
+
       <div id="status"></div>
     </section>
 
