@@ -22,6 +22,11 @@
   {
     "version": "1.3.0",
     "date": "2026-06-22",
-    "notes": "Screen flip 180° option for upside-down mounting, configurable via web flasher"
+    "notes": "Screen flip 180° option, Gotway/Begode and Kingsong mappings, removed mock data"
+  },
+  {
+    "version": "1.4.0",
+    "date": "2026-06-25",
+    "notes": "PWM and battery % for all protocols: Gotway (67/84/100V curves), Kingsong (67/84/100/126V), Nosfet 84V models"
   }
 ]
