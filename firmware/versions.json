@@ -28,5 +28,10 @@
     "version": "1.4.0",
     "date": "2026-06-25",
     "notes": "PWM and battery % for all protocols: Gotway (67/84/100V curves), Kingsong (67/84/100/126V), Nosfet 84V models"
+  },
+  {
+    "version": "1.5.0",
+    "date": "2026-06-29",
+    "notes": "Inmotion support: Classic (FFE0) and V2 (Nordic UART) variants for V11/V12/V13/S1 — speed, PWM, battery %, temperature"
   }
 ]

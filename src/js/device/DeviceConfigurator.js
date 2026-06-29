@@ -37,6 +37,16 @@ export class DeviceConfigurator {
     return resp ? resp.substring(3) : null;
   }
 
+  async readBattery() {
+    const resp = await this.#sendCommand('BATTERY?', 'BATTERY=');
+    return resp ? resp.substring(8) : null;
+  }
+
+  async setBattery(value) {
+    const resp = await this.#sendCommand(`BATTERY=${value}`, 'OK:BATTERY=');
+    return resp ? resp.substring(3) : null;
+  }
+
   async readFlip() {
     const resp = await this.#sendCommand('FLIP?', 'FLIP=');
     return resp ? resp.substring(5) : null;

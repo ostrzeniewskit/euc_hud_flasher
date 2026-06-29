@@ -63,6 +63,8 @@
         <option value="NOSFET">Nosfet / Veteran</option>
         <option value="GOTWAY">Gotway / Begode</option>
         <option value="KINGSONG">Kingsong</option>
+        <option value="INMOTION">Inmotion (Classic)</option>
+        <option value="INMOTIONV2">Inmotion V2 (V11/V12/V13/S1)</option>
       </select>
       <p class="help" style="margin-top:0.2rem; margin-bottom:0.8rem;">
         Auto-detect identifies the protocol from incoming data.
@@ -82,13 +84,33 @@
           <input type="radio" name="dispMode" value="SPEED" checked disabled> Speed (km/h)
         </label>
         <label class="radio-label">
-          <input type="radio" name="dispMode" value="PWM" disabled> Safety Margin (%)
+          <input type="radio" name="dispMode" value="PWM" disabled> PWM (% used)
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="dispMode" value="SAFETY" disabled> Safety Margin (% left)
         </label>
       </div>
 
       <div class="btn-row">
         <button id="readModeBtn" class="secondary" disabled>Read Current</button>
         <button id="setModeBtn" class="primary" disabled>Save to Device</button>
+      </div>
+
+      <hr style="border:none; border-top:1px solid #334; margin:1rem 0;">
+
+      <label>Battery display</label>
+      <div class="btn-row" style="margin-bottom: 0.8rem;">
+        <label class="radio-label">
+          <input type="radio" name="battMode" value="PERCENT" checked disabled> Battery %
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="battMode" value="VOLTAGE" disabled> Voltage (V)
+        </label>
+      </div>
+
+      <div class="btn-row">
+        <button id="readBattBtn" class="secondary" disabled>Read Current</button>
+        <button id="setBattBtn" class="primary" disabled>Save to Device</button>
       </div>
 
       <hr style="border:none; border-top:1px solid #334; margin:1rem 0;">
