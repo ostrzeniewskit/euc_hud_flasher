@@ -14,6 +14,9 @@ export class ConfiguratorUI {
   #readModeBtn;
   #setModeBtn;
   #modeRadios;
+  #readBattBtn;
+  #setBattBtn;
+  #battRadios;
   #readFlipBtn;
   #setFlipBtn;
   #flipRadios;
@@ -34,6 +37,9 @@ export class ConfiguratorUI {
     this.#readModeBtn    = document.getElementById('readModeBtn');
     this.#setModeBtn     = document.getElementById('setModeBtn');
     this.#modeRadios     = document.querySelectorAll('input[name="dispMode"]');
+    this.#readBattBtn    = document.getElementById('readBattBtn');
+    this.#setBattBtn     = document.getElementById('setBattBtn');
+    this.#battRadios     = document.querySelectorAll('input[name="battMode"]');
     this.#readFlipBtn    = document.getElementById('readFlipBtn');
     this.#setFlipBtn     = document.getElementById('setFlipBtn');
     this.#flipRadios     = document.querySelectorAll('input[name="flipMode"]');
@@ -50,6 +56,8 @@ export class ConfiguratorUI {
     this.#setMappingBtn.addEventListener('click',  () => this.#onSetMapping());
     this.#readModeBtn.addEventListener('click',    () => this.#onReadMode());
     this.#setModeBtn.addEventListener('click',     () => this.#onSetMode());
+    this.#readBattBtn.addEventListener('click',    () => this.#onReadBattery());
+    this.#setBattBtn.addEventListener('click',     () => this.#onSetBattery());
     this.#readFlipBtn.addEventListener('click',    () => this.#onReadFlip());
     this.#setFlipBtn.addEventListener('click',     () => this.#onSetFlip());
   }
@@ -66,6 +74,9 @@ export class ConfiguratorUI {
     this.#readModeBtn.disabled    = !on;
     this.#setModeBtn.disabled     = !on;
     this.#modeRadios.forEach(r => r.disabled = !on);
+    this.#readBattBtn.disabled    = !on;
+    this.#setBattBtn.disabled     = !on;
+    this.#battRadios.forEach(r => r.disabled = !on);
     this.#readFlipBtn.disabled    = !on;
     this.#setFlipBtn.disabled     = !on;
     this.#flipRadios.forEach(r => r.disabled = !on);
@@ -168,6 +179,36 @@ export class ConfiguratorUI {
     this.#status.show('Saving mode...');
     try {
       const saved = await this.#configurator.setMode(mode);
+      if (saved !== null) {
+        this.#status.show('Saved: ' + saved);
+      } else {
+        this.#status.show('No response from device.', true);
+      }
+    } catch (e) {
+      this.#status.show('Save failed: ' + e.message, true);
+    }
+  }
+
+  async #onReadBattery() {
+    this.#status.show('Reading battery display...');
+    try {
+      const val = await this.#configurator.readBattery();
+      if (val !== null) {
+        this.#battRadios.forEach(r => r.checked = (r.value === val));
+        this.#status.show('Battery display: ' + (val === 'VOLTAGE' ? 'Voltage' : 'Percent'));
+      } else {
+        this.#status.show('No response from device.', true);
+      }
+    } catch (e) {
+      this.#status.show('Read failed: ' + e.message, true);
+    }
+  }
+
+  async #onSetBattery() {
+    const val = document.querySelector('input[name="battMode"]:checked').value;
+    this.#status.show('Saving battery display...');
+    try {
+      const saved = await this.#configurator.setBattery(val);
       if (saved !== null) {
         this.#status.show('Saved: ' + saved);
       } else {
