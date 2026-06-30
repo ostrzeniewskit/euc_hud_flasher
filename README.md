@@ -107,3 +107,7 @@ To release a new firmware version:
 ![HUD scanning with custom device name](img/ezgif-6e00b60d87dd4760.gif)
 
 *Custom device name ("Nosfet aero") configured through the flasher*
+
+
+*Help me support my project!*
+https://buymeacoffee.com/euchud
